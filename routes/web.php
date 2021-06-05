@@ -24,8 +24,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::auth();
-Auth::routes(['verify'=>true,'register'=>false]);
+Route::auth();
+//Auth::routes(['verify'=>true,'register'=>false]);
 
 
 Route::get('/home', 'HomeController@index');
