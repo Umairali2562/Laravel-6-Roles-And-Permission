@@ -52,14 +52,7 @@ Route::get('/zhc',function(){
 
 
 
-Route::middleware(['auth:web','can:Create'])->group(function (){
 
-
-
-
-
-
-});
 
 
 Route::group(['middleware'=>'Admin'],function (){
@@ -85,6 +78,13 @@ Route::group(['middleware'=>'Admin'],function (){
         'create'=>'admin.categories.create',
         'store'=>'admin.categories.store',
         'edit'=>'admin.categories.edit'
+
+    ]]);
+
+    Route::resource('/admin/profile','UserProfileController',['names'=>[
+
+
+        'index'=>'admin.profile.edit'
 
     ]]);
 

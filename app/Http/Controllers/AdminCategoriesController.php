@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
+use Gate;
 
 class AdminCategoriesController extends Controller
 {
@@ -13,6 +14,7 @@ class AdminCategoriesController extends Controller
      */
     public function index()
     {
+        Gate::authorize('ReadsCategories');
         $categories=Category::all();
 
         return view('admin.categories.index',compact('categories'));
@@ -36,6 +38,7 @@ class AdminCategoriesController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('CreatesCategories');
         $name=$request->name;
         Category::create(['name'=>$name]);
         return redirect('/admin/categories');
@@ -60,6 +63,7 @@ class AdminCategoriesController extends Controller
      */
     public function edit($id)
     {
+       // Gate::authorize('UpdatesCategories');
         $category=Category::findOrFail($id);
         return view('admin.categories.edit',compact('category'));
     }
@@ -73,6 +77,7 @@ class AdminCategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('UpdatesCategories');
         $category=Category::findOrFail($id);
         $category->update($request->all());
         return redirect('/admin/categories');
@@ -86,6 +91,7 @@ class AdminCategoriesController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('DeletesCategories');
         Category::findOrFail($id)->delete();
         return redirect('/admin/categories');
     }

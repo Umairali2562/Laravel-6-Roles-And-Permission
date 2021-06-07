@@ -5,7 +5,7 @@ use App\Permission;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
-
+use Gate;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 
@@ -18,6 +18,7 @@ class UserPermissionsController extends Controller
      */
     public function index()
     {
+        Gate::authorize('ReadsRoles');
         $roles=Role::all();
         $permissions=Permission::all();
 
@@ -44,6 +45,8 @@ class UserPermissionsController extends Controller
      */
     public function store(Request $request)
     {
+
+        Gate::authorize('CreatesRoles');
         $input['name']=$request->title;
 
 
@@ -86,6 +89,7 @@ class UserPermissionsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('UpdatesRoles');
         $permissions=$request->mypermissions;
         $ok=json_encode(($permissions),true);
         //echo $ok;
@@ -102,6 +106,7 @@ class UserPermissionsController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('DeletesRoles');
         Role::destroy($id);
         return redirect('/admin/permissions');
     }

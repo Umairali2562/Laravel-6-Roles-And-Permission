@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Photo;
 use App\Post;
+use Gate;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostsCreateRequest;
@@ -22,6 +23,7 @@ class AdminPostsController extends Controller
      */
     public function index()
     {
+        Gate::authorize('ReadsPosts');
         $posts=Post::all();
         $users=user::all();
         $currentUser = Auth::user();
@@ -37,9 +39,8 @@ class AdminPostsController extends Controller
      */
     public function create()
     {
+
         $categories=Category::pluck('name','id')->all();
-
-
         return view('admin.posts.create',compact('categories'));
     }
 
@@ -51,6 +52,8 @@ class AdminPostsController extends Controller
      */
     public function store(Request $request)
     {
+
+        Gate::authorize('CreatesPosts');
         $input=$request->all();
         $user=Auth::user();
 
@@ -102,6 +105,8 @@ class AdminPostsController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        Gate::authorize('UpdatesPosts');
         $input=$request->all();
 
         if($file=$request->file('photo_id')){
@@ -127,6 +132,7 @@ class AdminPostsController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('DeletesPosts');
         $Post=Post::findOrFail($id);
         unlink(str_replace("","/",public_path()).str_replace("..","",$Post->photo->file));
         $Post->delete();

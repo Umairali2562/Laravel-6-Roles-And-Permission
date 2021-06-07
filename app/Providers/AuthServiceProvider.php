@@ -27,10 +27,10 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        //create gate
+    /*    //create gate
         Gate::define('Create',function($user){
             $permissions=$user->role->permission();
-            //dd($permissions);
+
             foreach ($permissions as $permission){
 
 
@@ -108,9 +108,40 @@ class AuthServiceProvider extends ServiceProvider
 
             }
 
-        });
+        });*/
+
+        //admin user
+        Gate::define('Administrator','App\Gates\PostGates@Administrator');
+
+        //Gates For Posts
+        Gate::define('CreatesPosts','App\Gates\PostGates@CreatesPosts');
+        Gate::define('ReadsPosts','App\Gates\PostGates@ReadsPosts');
+        Gate::define('UpdatesPosts','App\Gates\PostGates@UpdatesPosts');
+        Gate::define('DeletesPosts','App\Gates\PostGates@DeletesPosts');
 
 
+        //Gates For Categories
+        Gate::define('CreatesCategories','App\Gates\CategoryGates@CreatesCategories');
+        Gate::define('ReadsCategories','App\Gates\CategoryGates@ReadsCategories');
+        Gate::define('UpdatesCategories','App\Gates\CategoryGates@UpdatesCategories');
+        Gate::define('DeletesCategories','App\Gates\CategoryGates@DeletesCategories');
+
+
+        //Gates For Permissions & Roles
+        Gate::define('CreatesRoles','App\Gates\PermissionGates@CreatesRoles');
+        Gate::define('ReadsRoles','App\Gates\PermissionGates@ReadsRoles');
+        Gate::define('UpdatesRoles','App\Gates\PermissionGates@UpdatesRoles');
+        Gate::define('DeletesRoles','App\Gates\PermissionGates@DeletesRoles');
+
+        //Gates For User
+        Gate::define('CreatesUsers','App\Gates\UserGates@CreatesUsers');
+        Gate::define('ReadsUsers','App\Gates\UserGates@ReadsUsers');
+        Gate::define('UpdatesUsers','App\Gates\UserGates@UpdatesUsers');
+        Gate::define('DeletesUsers','App\Gates\UserGates@DeletesUsers');
+
+        //Gates For Media
+        Gate::define('CreatesMedias','App\Gates\MediaGates@CreatesMedias');
+        Gate::define('DeletesMedias','App\Gates\MediaGates@DeletesMedias');
 
 
 

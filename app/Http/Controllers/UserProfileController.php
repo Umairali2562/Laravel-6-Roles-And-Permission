@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Photo;
-use Illuminate\Http\Request;
-use Gate;
 
-class AdminMediasController extends Controller
+use App\Photo;
+use App\Role;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class UserProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +17,8 @@ class AdminMediasController extends Controller
      */
     public function index()
     {
-
-        Gate::authorize('ReadsMedias');
-        $photos=Photo::all();
-
-        return view('admin.media.index',compact('photos'));
+        $user=Auth::user();
+        return view('admin.users.profile',compact('user'));
     }
 
     /**
@@ -28,7 +28,7 @@ class AdminMediasController extends Controller
      */
     public function create()
     {
-        return view('admin.media.create');
+        //
     }
 
     /**
@@ -39,11 +39,7 @@ class AdminMediasController extends Controller
      */
     public function store(Request $request)
     {
-        Gate::authorize('CreatesMedias');
-        $file=$request->file('file');
-        $name=time().$file->getClientOriginalName();
-        $file->move('images',$name);
-        Photo::create(['file'=>$name]);
+        //
     }
 
     /**
@@ -63,9 +59,10 @@ class AdminMediasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+
+
     }
 
     /**
@@ -77,7 +74,26 @@ class AdminMediasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user=User::findOrFail($id);
+        if(trim($request->password)==''){
+            $input=$request->except('password');
+        }else{
+            $input=$request->all();
+            $input['password']=bcrypt($request->password);// encrypting the password from the request variable , and storing it in the input array
+
+        }
+
+
+        if($file=$request->file('photo_id')){
+
+            $name=time().$file->getClientOriginalName();
+            $file->move('images',$name);
+            $photo=Photo::create(['file'=>$name]);
+            $input['photo_id']=$photo->id;
+        }
+
+        $user->update($input);
+        //return redirect('admin/profile');
     }
 
     /**
@@ -88,11 +104,6 @@ class AdminMediasController extends Controller
      */
     public function destroy($id)
     {
-        Gate::authorize('DeletesMedias');
-        $photo=Photo::findOrFail($id);
-        $my= str_replace("..","",$photo->file);
-        unlink(public_path().$my);
-        $photo->delete();
-        return redirect('/admin/media');
+        //
     }
 }

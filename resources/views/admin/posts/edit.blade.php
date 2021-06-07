@@ -39,21 +39,20 @@
 
 
 
-    @can('Update')
+
         <div class="form-group">
             {!! Form::submit('Update Post',['class'=>'btn btn-primary col-sm-2 mybtn']) !!}
         </div>
-    @endcan
+
 
         {!! Form::close() !!}
 
     {!! Form::open(['method'=>'DELETE','action'=>['AdminPostsController@destroy',$post->id]]) !!}
 
-@can('Delete')
+
     <div class="form-group">
         {!! Form::submit('Delete Post',['class'=>'btn btn-danger col-sm-2 mybtn']) !!}
     </div>
-    @endcan
 
     {!! Form::close() !!}
     </div>

@@ -33,11 +33,11 @@
 
 
 
-        @can('Create')
+
       <div class="form-group">
           {!! Form::submit('Create Post',['class'=>'btn btn-primary']) !!}
       </div>
-        @endcan
+
       {!! Form::close() !!}
     </div>
 

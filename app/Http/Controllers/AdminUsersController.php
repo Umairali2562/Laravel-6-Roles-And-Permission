@@ -8,6 +8,7 @@ use App\User;
 use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Gate;
 use Illuminate\Support\Facades\Session;
 class AdminUsersController extends Controller
 {
@@ -16,8 +17,11 @@ class AdminUsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
     public function index()
     {
+        Gate::authorize('ReadsUsers');
         $users=user::all();
         return view('admin.users.index',compact('users'));
     }
@@ -29,6 +33,7 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
+
         $roles=Role::pluck('name','id')->all();
         return view('admin.users.create',compact('roles'));
     }
@@ -41,6 +46,8 @@ class AdminUsersController extends Controller
      */
     public function store(Request $request)
     {
+
+        Gate::authorize('CreatesUsers');
         if(trim($request->password)==''){
             $input=$request->except('password');
         }else{
@@ -58,10 +65,14 @@ class AdminUsersController extends Controller
             $input['photo_id']=$photo->id; //getting its ID of the inserted record and storing it in the input array
 
         }
-        //$input['password']=bcrypt($request->password);// encrypting the password from the request variable , and storing it in the input array
-        user::create($input); //inserting all the input array in the user's table which means photo_id as well above
 
+
+
+        $input['password']=bcrypt($request->password);// encrypting the password from the request variable , and storing it in the input array
+        //return $request->all();
+       user::create($input); //inserting all the input array in the user's table which means photo_id as well above
         return redirect('/admin/users'); //returning the user to the display users
+
     }
 
     /**
@@ -72,7 +83,7 @@ class AdminUsersController extends Controller
      */
     public function show($id)
     {
-        return view('admin.users.show');
+
     }
 
     /**
@@ -83,6 +94,7 @@ class AdminUsersController extends Controller
      */
     public function edit($id)
     {
+
         $user=user::findOrFail($id);
         ///$userid=$user->role_id;
         //$roles=role::find($userid);
@@ -102,6 +114,7 @@ class AdminUsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('UpdatesUsers');
         $user=User::findOrFail($id);
         if(trim($request->password)==''){
             $input=$request->except('password');
@@ -132,6 +145,7 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
+        Gate::authorize('DeletesUsers');
         $user=User::findOrFail($id);
         if(isset($user->photo->file)){
             unlink(str_replace("", "/", public_path()) . str_replace("..", "", $user->photo->file));
