@@ -55,11 +55,24 @@ class User extends Authenticatable
         foreach ($permissions as $permission){
 
             if(in_array($permission->name,[
-                    'Dashboard',
-                    'Create',
-                    'Read',
-                    'Update',
-                    'Delete',
+                    'Create-Roles',
+                    'Read-Roles',
+                    'Update-Roles',
+                    'Delete-Roles',
+                    'Create-Users',
+                    'Read-Users',
+                    'Update-Users',
+                    'Delete-Users',
+                    'Create-Posts',
+                    'Read-Posts',
+                    'Update-Posts',
+                    'Delete-Posts',
+                    'Create-Categories',
+                    'Read-Categories',
+                    'Update-Categories',
+                    'Delete-Categories',
+                    'Read-Medias',
+                    'Delete-Categories',
 
                 ]) && $this->is_active==1){
                 return true;

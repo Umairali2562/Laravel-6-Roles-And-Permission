@@ -7,7 +7,7 @@
 
     <div class="row">
 
-        <div class="col-sm-3">
+        <div class="col-sm-3" style="margin: 16px">
 
 
             <img src="{{$post->photo?  str_replace("../","../../../",$post->photo->file) : 'http://placehold.it//400x400'}}" height='140px'>

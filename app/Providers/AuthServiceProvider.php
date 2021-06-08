@@ -140,7 +140,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('DeletesUsers','App\Gates\UserGates@DeletesUsers');
 
         //Gates For Media
-        Gate::define('CreatesMedias','App\Gates\MediaGates@CreatesMedias');
+        Gate::define('ReadsMedias','App\Gates\MediaGates@ReadsMedias');
         Gate::define('DeletesMedias','App\Gates\MediaGates@DeletesMedias');
 
 

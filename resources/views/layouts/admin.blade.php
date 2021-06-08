@@ -118,9 +118,11 @@
                     <li>
                         <a href="/admin"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
+
                     <li>
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Roles<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
+
                             <li>
                                 <a href="{{route('admin.permissions.index')}}">All Roles</a>
                             </li>
@@ -130,66 +132,92 @@
                             </li>
 
                         </ul>
-                        <!-- /.nav-second-level -->
+
                     </li>
+
+
+                    @canany(['ReadsUsers', 'CreatesUsers', 'UpdatesUsers','DeletesUsers'])
                     <li>
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Users<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-                            <li>
-                                <a href="{{route('admin.users.index')}}">All Users</a>
-                            </li>
+
 
                             <li>
+                                @can('ReadsUsers')
+                                <a href="{{route('admin.users.index')}}">All Users</a>
+                                @endcan
+                            </li>
+
+
+
+                            <li>
+                                @can('CreatesUsers')
                                 <a href="{{route('admin.users.create')}}">Create User</a>
+                                @endcan
                             </li>
 
                         </ul>
-                        <!-- /.nav-second-level -->
+
                     </li>
+                    @endcanany
 
                     <li>
+                        @canany(['ReadsPosts', 'CreatesPosts', 'UpdatesPosts','DeletesPosts'])
                         <a href="#"><i class="fa fa-wrench fa-fw"></i> Posts<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
+
                             <li>
+                                @can('ReadsPosts')
                                 <a href="{{route('admin.posts.index')}}">All Posts</a>
+                                @endcan
                             </li>
 
                             <li>
+                                @can('CreatesPosts')
                                 <a href="{{route('admin.posts.create')}}">Create Post</a>
+                                @endcan
                             </li>
-
                         </ul>
-                        <!-- /.nav-second-level -->
+                        @endcanany
                     </li>
 
-
                     <li>
+                        @canany(['ReadsCategories', 'CreatesCategories', 'UpdatesCategories','DeletesCategories'])
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Categories<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
+
                             <li>
                                 <a href="{{route('admin.categories.index')}}">All Categories</a>
                             </li>
 
 
                         </ul>
-                        <!-- /.nav-second-level -->
+                        @endcanany
                     </li>
+
 
 
                     <li>
+                        @canany(['ReadsMedias','DeletesMedias'])
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Media<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
+
                                 <a href="{{route('admin.media.index')}}">All Media</a>
+
                             </li>
+
 
                             <li>
+                                @can('Administrator')
                                 <a href="{{route('admin.media.create')}}">Upload Media</a>
+                                @endcan
                             </li>
-
                         </ul>
-                        <!-- /.nav-second-level -->
+                        @endcanany
+
                     </li>
+
 
 
 

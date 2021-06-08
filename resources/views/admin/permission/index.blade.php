@@ -37,7 +37,7 @@
                     @endphp
 
                         @foreach($role->permission() as $permission)
-                    {{$permission?$permission->name:$No}}
+                    {{$permission?"[".$permission->name."]":$No}}
                     @endforeach
                     </td>
                     <td>{{$role->created_at?$role->created_at->diffForhumans():'..'}}</td>
