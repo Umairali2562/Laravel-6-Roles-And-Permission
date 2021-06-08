@@ -120,19 +120,24 @@
                     </li>
 
                     <li>
+                        @canany(['ReadsRoles', 'CreatesRoles', 'UpdatesRoles','DeletesRoles'])
                         <a href="#"><i class="fa fa-wrench fa-fw"></i>Roles<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
 
                             <li>
+                                @can('ReadsRoles')
                                 <a href="{{route('admin.permissions.index')}}">All Roles</a>
+                                @endcan
                             </li>
 
                             <li>
+                                @can('CreatesRoles')
                                 <a href="{{route('admin.permissions.create')}}">Create Roles</a>
+                                @endcan
                             </li>
 
                         </ul>
-
+                        @endcanany
                     </li>
 
 
@@ -237,9 +242,9 @@
 
 
             </div>
-            <!-- /.sidebar-collapse -->
+
         </div>
-        <!-- /.navbar-static-side -->
+
     </nav>
 
 
@@ -256,20 +261,7 @@
 
 
 
-                <li>
-                    <a href="#"><i class="fa fa-wrench fa-fw"></i> Posts<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li>
-                            <a href="">All Posts</a>
-                        </li>
 
-                        <li>
-                            <a href="">Create Post</a>
-                        </li>
-
-                    </ul>
-                    <!-- /.nav-second-level -->
-                </li>
 
 
 
